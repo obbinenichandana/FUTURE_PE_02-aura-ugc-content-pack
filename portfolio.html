@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UGC Content Studio — Vijayawada</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #0E0C0A;
+  --ink-soft: #3A3530;
+  --ink-muted: #7A746E;
+  --paper: #FBFAF8;
+  --paper-warm: #F4F1EC;
+  --paper-deep: #EAE5DC;
+  --gold: #B8912A;
+  --gold-light: #D4AE5A;
+  --gold-pale: #F0E4C4;
+  --border: rgba(14,12,10,0.10);
+  --border-strong: rgba(14,12,10,0.18);
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 5rem;
+  background: rgba(251,250,248,0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 500;
+  color: var(--ink); text-decoration: none; letter-spacing: 0.02em;
+}
+.nav-logo span { color: var(--gold); font-style: italic; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.78rem; font-weight: 400; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.6rem 1.4rem;
+  background: var(--ink); color: var(--paper);
+  text-decoration: none; border-radius: 2px; transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  padding-top: 80px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 50%; height: 100%;
+  background: var(--paper-warm);
+  z-index: 0;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 6rem 4rem 6rem 5rem;
+  position: relative; z-index: 1;
+}
+.eyebrow {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 2rem;
+}
+.eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--gold); }
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 4.5vw, 4.2rem);
+  font-weight: 400; line-height: 1.12;
+  color: var(--ink); margin-bottom: 1.75rem;
+  letter-spacing: -0.01em;
+}
+.hero-headline em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 1rem; line-height: 1.8; color: var(--ink-muted);
+  max-width: 440px; margin-bottom: 2.5rem; font-weight: 300;
+}
+.hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.btn-primary {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.9rem 2rem;
+  background: var(--ink); color: var(--paper);
+  text-decoration: none; border-radius: 2px;
+  border: 1px solid var(--ink); transition: all 0.25s;
+}
+.btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+.btn-outline {
+  font-size: 0.78rem; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.9rem 2rem;
+  background: transparent; color: var(--ink);
+  text-decoration: none; border-radius: 2px;
+  border: 1px solid var(--border-strong); transition: all 0.25s;
+}
+.btn-outline:hover { border-color: var(--ink); }
+.hero-stats {
+  margin-top: 3.5rem; padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 3rem;
+}
+.stat-num {
+  font-family: var(--font-display); font-size: 2rem;
+  font-weight: 400; color: var(--ink); line-height: 1;
+}
+.stat-lbl { font-size: 0.72rem; color: var(--ink-muted); margin-top: 4px; letter-spacing: 0.05em; }
+
+.hero-right {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 6rem 4rem;
+}
+.hero-card-stack { position: relative; width: 320px; height: 420px; }
+.hero-card {
+  position: absolute;
+  background: var(--paper);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 2rem;
+}
+.hero-card-main {
+  width: 280px; top: 40px; left: 20px;
+  box-shadow: 0 24px 60px rgba(14,12,10,0.12);
+  z-index: 2;
+}
+.hero-card-back {
+  width: 260px; top: 10px; left: 40px;
+  background: var(--gold-pale);
+  border-color: var(--gold-light);
+  z-index: 1;
+  transform: rotate(3deg);
+}
+.card-tag {
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1rem;
+}
+.card-quote {
+  font-family: var(--font-display);
+  font-size: 1.05rem; font-style: italic;
+  line-height: 1.55; color: var(--ink); margin-bottom: 1.25rem;
+}
+.card-meta { font-size: 0.75rem; color: var(--ink-muted); }
+.card-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+.card-platform {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.platform-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); display: inline-block; margin-right: 6px;
+}
+
+/* ── STRIP ── */
+.strip {
+  background: var(--ink); color: var(--paper);
+  padding: 2.5rem 5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap;
+}
+.strip-text {
+  font-family: var(--font-display); font-size: 1.5rem;
+  font-weight: 400; font-style: italic; color: var(--paper);
+  opacity: 0.9;
+}
+.strip-items { display: flex; gap: 3rem; }
+.strip-item { text-align: center; }
+.strip-item-val {
+  font-family: var(--font-display); font-size: 1.8rem;
+  color: var(--gold-light); font-weight: 400;
+}
+.strip-item-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 3px; letter-spacing: 0.06em; }
+
+/* ── SECTIONS SHARED ── */
+section { padding: 6rem 5rem; }
+.sec-eyebrow {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem;
+}
+.sec-eyebrow::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--gold); }
+.sec-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 400; line-height: 1.2; color: var(--ink);
+}
+.sec-title em { font-style: italic; color: var(--gold); }
+
+/* ── SERVICES ── */
+.services { background: var(--paper-warm); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; margin-top: 3.5rem;
+}
+.svc-card {
+  background: var(--paper); padding: 2.5rem;
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.svc-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--gold);
+  transform: scaleX(0); transition: transform 0.3s;
+  transform-origin: left;
+}
+.svc-card:hover::after { transform: scaleX(1); }
+.svc-card:hover { background: var(--paper-deep); }
+.svc-num {
+  font-family: var(--font-display); font-size: 3rem;
+  font-weight: 400; color: var(--gold-pale);
+  line-height: 1; margin-bottom: 1.25rem;
+}
+.svc-name {
+  font-size: 1.05rem; font-weight: 500; color: var(--ink);
+  margin-bottom: 0.75rem; line-height: 1.3;
+}
+.svc-desc {
+  font-size: 0.88rem; line-height: 1.7; color: var(--ink-muted);
+  font-weight: 300; margin-bottom: 1.25rem;
+}
+.svc-price {
+  font-size: 0.78rem; font-weight: 500; color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+/* ── SAMPLES ── */
+.samples-intro {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: start; margin-top: 3.5rem;
+}
+.sample-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.stab {
+  font-size: 0.75rem; font-weight: 400; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 0.45rem 1rem;
+  border: 1px solid var(--border-strong); border-radius: 2px;
+  background: transparent; color: var(--ink-muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.stab.active, .stab:hover {
+  background: var(--ink); color: var(--paper); border-color: var(--ink);
+}
+.sample-content { display: none; }
+.sample-content.active { display: block; }
+.sample-hook {
+  font-family: var(--font-display); font-size: 1.3rem;
+  font-style: italic; line-height: 1.45;
+  color: var(--ink); margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--gold);
+}
+.sample-script {
+  font-size: 0.85rem; line-height: 1.9; color: var(--ink-muted);
+  font-weight: 300; white-space: pre-line;
+}
+.sample-script strong { color: var(--ink); font-weight: 500; }
+.sample-right { position: sticky; top: 100px; }
+.why-card {
+  background: var(--paper-warm); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2rem; margin-bottom: 1rem;
+}
+.why-title { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; }
+.why-text { font-size: 0.85rem; line-height: 1.7; color: var(--ink-muted); font-weight: 300; }
+
+/* ── PROCESS ── */
+.process { background: var(--paper-warm); }
+.process-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2px; margin-top: 3.5rem;
+}
+.process-step { background: var(--paper); padding: 2.5rem 2rem; position: relative; }
+.process-step::before {
+  content: attr(data-num);
+  font-family: var(--font-display); font-size: 4rem;
+  font-weight: 400; color: var(--gold-pale);
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  line-height: 1;
+}
+.process-step-title { font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.6rem; }
+.process-step-text { font-size: 0.85rem; line-height: 1.7; color: var(--ink-muted); font-weight: 300; }
+
+/* ── PRICING ── */
+.pricing-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3.5rem;
+}
+.price-card {
+  border: 1px solid var(--border-strong); border-radius: 4px;
+  padding: 2.5rem; position: relative; overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.price-card:hover { box-shadow: 0 16px 48px rgba(14,12,10,0.08); }
+.price-card.featured {
+  background: var(--ink); border-color: var(--ink);
+}
+.featured-tag {
+  position: absolute; top: 1.25rem; right: 1.25rem;
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 4px 10px;
+  background: var(--gold); color: var(--paper); border-radius: 2px;
+}
+.price-name {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem;
+}
+.price-card.featured .price-name { color: rgba(255,255,255,0.5); }
+.price-amt {
+  font-family: var(--font-display); font-size: 2.5rem;
+  font-weight: 400; color: var(--ink); line-height: 1; margin-bottom: 0.3rem;
+}
+.price-card.featured .price-amt { color: var(--gold-light); }
+.price-period { font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 1.5rem; }
+.price-card.featured .price-period { color: rgba(255,255,255,0.4); }
+.price-divider { height: 1px; background: var(--border); margin-bottom: 1.5rem; }
+.price-card.featured .price-divider { background: rgba(255,255,255,0.1); }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 2rem; }
+.price-features li {
+  font-size: 0.85rem; color: var(--ink-muted); font-weight: 300;
+  display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;
+}
+.price-card.featured .price-features li { color: rgba(255,255,255,0.65); }
+.price-features li::before {
+  content: '✦'; color: var(--gold); font-size: 0.55rem;
+  margin-top: 4px; flex-shrink: 0;
+}
+.price-btn {
+  display: block; text-align: center;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.8rem 1.5rem;
+  border-radius: 2px; text-decoration: none; transition: all 0.2s;
+  border: 1px solid var(--border-strong); color: var(--ink);
+}
+.price-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.price-card.featured .price-btn {
+  background: var(--gold); color: var(--paper); border-color: var(--gold);
+}
+.price-card.featured .price-btn:hover { background: var(--gold-light); border-color: var(--gold-light); }
+
+/* ── TESTIMONIALS ── */
+.testi { background: var(--paper-warm); }
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem; margin-top: 3.5rem;
+}
+.testi-card {
+  background: var(--paper); border: 1px solid var(--border);
+  border-radius: 4px; padding: 2rem;
+}
+.testi-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.testi-text {
+  font-family: var(--font-display); font-size: 0.95rem;
+  font-style: italic; line-height: 1.65; color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+.testi-by { font-size: 0.78rem; color: var(--ink-muted); }
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: var(--ink);
+  padding: 5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 3rem; flex-wrap: wrap;
+}
+.cta-banner-title {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 400; color: var(--paper); line-height: 1.2; max-width: 500px;
+}
+.cta-banner-title em { font-style: italic; color: var(--gold-light); }
+.cta-banner-sub {
+  font-size: 0.9rem; line-height: 1.75; color: rgba(255,255,255,0.5);
+  max-width: 440px; margin-top: 0.75rem; font-weight: 300;
+}
+.cta-banner-actions { display: flex; flex-direction: column; gap: 0.75rem; align-items: flex-start; }
+.btn-gold {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.9rem 2rem;
+  background: var(--gold); color: var(--paper);
+  text-decoration: none; border-radius: 2px; transition: background 0.2s;
+  white-space: nowrap;
+}
+.btn-gold:hover { background: var(--gold-light); }
+.btn-ghost {
+  font-size: 0.78rem; font-weight: 400; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 0.9rem 2rem;
+  background: transparent; color: rgba(255,255,255,0.5);
+  text-decoration: none; border-radius: 2px;
+  border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-ghost:hover { color: var(--paper); border-color: rgba(255,255,255,0.4); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--paper-warm);
+  padding: 3rem 5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid var(--border); flex-wrap: wrap; gap: 1.5rem;
+}
+.footer-logo {
+  font-family: var(--font-display); font-size: 1.2rem; font-weight: 500;
+  color: var(--ink); text-decoration: none;
+}
+.footer-logo span { color: var(--gold); font-style: italic; }
+.footer-info { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.6; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a {
+  font-size: 0.75rem; color: var(--ink-muted); text-decoration: none;
+  letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--gold); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-left > * {
+  opacity: 0; animation: fadeUp 0.7s ease forwards;
+}
+.hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+.hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+.hero-right {
+  opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero::before { display: none; }
+  .hero-left { padding: 4rem 1.5rem 3rem; }
+  .hero-right { padding: 2rem 1.5rem 4rem; background: var(--paper-warm); }
+  .hero-card-stack { width: 280px; height: 360px; }
+  .hero-card-main { width: 240px; }
+  .hero-card-back { width: 220px; }
+  section { padding: 4rem 1.5rem; }
+  .strip { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; }
+  .services-grid, .process-grid { grid-template-columns: 1fr; gap: 2px; }
+  .pricing-grid, .testi-grid { grid-template-columns: 1fr; }
+  .samples-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+  .sample-right { position: static; }
+  .cta-banner { padding: 3rem 1.5rem; flex-direction: column; }
+  footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Content<span>Studio.</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#samples">Samples</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/91XXXXXXXXXX" class="nav-cta">Work With Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="eyebrow">UGC Content Creator · Vijayawada</p>
+    <h1 class="hero-headline">Ads that feel<br><em>real.</em> Because<br>they are.</h1>
+    <p class="hero-sub">I write UGC-style ad scripts for local businesses and D2C brands in Andhra Pradesh — content that looks like honest customer videos, not polished ads. Better trust. Better conversions.</p>
+    <div class="hero-actions">
+      <a href="#samples" class="btn-primary">See Sample Scripts</a>
+      <a href="#pricing" class="btn-outline">View Packages</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">4×</div>
+        <div class="stat-lbl">Higher conversion vs traditional ads</div>
+      </div>
+      <div>
+        <div class="stat-num">48h</div>
+        <div class="stat-lbl">Script delivery turnaround</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-lbl">AI-powered, human-approved</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card-stack">
+      <div class="hero-card hero-card-back"></div>
+      <div class="hero-card hero-card-main">
+        <div class="card-tag">Sample Hook · Hair Salon</div>
+        <div class="card-quote">"I was losing hair in fistfuls every morning. Six sessions at one salon in Vijayawada changed everything."</div>
+        <div class="card-divider"></div>
+        <div class="card-platform">
+          <div class="card-meta"><span class="platform-dot"></span>Instagram Reels</div>
+          <div class="card-meta">30 sec · Problem-led</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="strip">
+  <div class="strip-text">"Ads that feel human always outperform ads that look perfect."</div>
+  <div class="strip-items">
+    <div class="strip-item">
+      <div class="strip-item-val">Reels</div>
+      <div class="strip-item-lbl">Instagram</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-item-val">Shorts</div>
+      <div class="strip-item-lbl">YouTube</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-item-val">Stories</div>
+      <div class="strip-item-lbl">Meta Ads</div>
+    </div>
+    <div class="strip-item">
+      <div class="strip-item-val">WhatsApp</div>
+      <div class="strip-item-lbl">Status Ads</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <p class="sec-eyebrow">What I Offer</p>
+  <h2 class="sec-title">Everything your brand needs to <em>convert</em></h2>
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-num">01</div>
+      <div class="svc-name">UGC Hook Writing</div>
+      <p class="svc-desc">5 scroll-stopping hooks for the same product — problem-led, social proof, transformation, contrarian, and relatable moment. The first 3 seconds decide everything.</p>
+      <div class="svc-price">Included in all packages</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">02</div>
+      <div class="svc-name">Full Ad Script Pack</div>
+      <p class="svc-desc">Complete timestamped scripts with visual direction, following the Problem → Agitate → Discovery → Proof → CTA framework. Ready to film, no editing needed.</p>
+      <div class="svc-price">From ₹3,000 per pack</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">03</div>
+      <div class="svc-name">Captions & CTAs</div>
+      <p class="svc-desc">Platform-optimised Instagram captions, story CTAs, and hashtag sets written in a real customer voice. Storytelling, punchy, and educational versions included.</p>
+      <div class="svc-price">Included with scripts</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">04</div>
+      <div class="svc-name">Monthly Content Calendar</div>
+      <p class="svc-desc">4 fresh UGC scripts every month covering different services and audiences. Consistent content pipeline so you never run out of ad ideas.</p>
+      <div class="svc-price">From ₹8,000/month</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">05</div>
+      <div class="svc-name">Platform Adaptation</div>
+      <p class="svc-desc">Same core script rewritten for Instagram Reels, YouTube Shorts, Stories, and Meta paid ads — each with the right tone, length, and CTA for that platform.</p>
+      <div class="svc-price">Add-on · ₹500 per platform</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">06</div>
+      <div class="svc-name">Free Starter Pack</div>
+      <p class="svc-desc">First-time clients get a free sample content pack for their business — 2 hooks and 1 full script — before committing to anything. See the quality before you pay.</p>
+      <div class="svc-price">Free · No commitment</div>
+    </div>
+  </div>
+</section>
+
+<!-- SAMPLES -->
+<section id="samples">
+  <p class="sec-eyebrow">Sample Work</p>
+  <h2 class="sec-title">Real scripts for real <em>businesses</em></h2>
+  <div class="samples-intro">
+    <div class="sample-left">
+      <div class="sample-tabs">
+        <button class="stab active" onclick="showSample('hairfall')">Hairfall</button>
+        <button class="stab" onclick="showSample('skin')">Skin Glow</button>
+        <button class="stab" onclick="showSample('bridal')">Bridal</button>
+        <button class="stab" onclick="showSample('color')">Hair Color</button>
+      </div>
+
+      <div id="sample-hairfall" class="sample-content active">
+        <div class="sample-hook">"I was losing hair in fistfuls every morning. Six sessions at Aura in Vijayawada changed everything."</div>
+        <div class="sample-script"><strong>[Hook — 0:00–0:03]</strong>
+*runs hand through hair, shows loose hair on palm*
+"I was losing this much hair every single morning."
+
+<strong>[Problem — 0:03–0:12]</strong>
+"I tried every oil, every shampoo, every home remedy. Nothing worked. Doctors said stress — okay, but what do I actually DO about it?"
+
+<strong>[Discovery — 0:12–0:20]</strong>
+"My colleague told me about Aura Studio in Governorpet. They did a scalp analysis first. Turned out I had protein deficiency. No one had ever told me that."
+
+<strong>[Result — 0:20–0:27]</strong>
+"Six sessions. Keratin and botanical treatment. My hairfall reduced by 80%. My hair feels thick again."
+
+<strong>[CTA — 0:27–0:30]</strong>
+"Free consultation first. WhatsApp number in my bio. Go."</div>
+      </div>
+
+      <div id="sample-skin" class="sample-content">
+        <div class="sample-hook">"I spent ₹8,000 on facials across Vijayawada that did literally nothing. Then I visited Aura."</div>
+        <div class="sample-script"><strong>[Hook — 0:00–0:04]</strong>
+"I spent ₹8,000 on facials across different salons in Vijayawada. My skin looked exactly the same."
+
+<strong>[Agitate — 0:04–0:14]</strong>
+"I have dullness and uneven tone — summer here just makes it worse. I wanted a glow that lasted more than one day after a facial."
+
+<strong>[Pivot — 0:14–0:22]</strong>
+"Someone told me to try Aura Studio. The specialist assessed my skin before suggesting anything. She said I needed a brightening peel — not a standard facial."
+
+<strong>[Result — 0:22–0:30]</strong>
+"After 3 sessions — I stopped wearing foundation to work. My skin tone is genuinely more even."
+
+<strong>[CTA — 0:30–0:35]</strong>
+"First consultation is free. Starting at ₹1,499. Link in bio."</div>
+      </div>
+
+      <div id="sample-bridal" class="sample-content">
+        <div class="sample-hook">"My wedding is next month. And this is the only salon I trusted with my skin and hair."</div>
+        <div class="sample-script"><strong>[Hook — 0:00–0:04]</strong>
+*getting ready, mirror shot*
+"My wedding is next month. And this is the only salon I trusted with my skin and hair."
+
+<strong>[Story — 0:04–0:18]</strong>
+"I started the Aura bridal package 7 weeks before my wedding. Skin assessment first. Hair trial two weeks before. I felt genuinely heard, not rushed."
+
+<strong>[Day-of — 0:18–0:30]</strong>
+"Wedding day — HD airbrush makeup. My skin was so prepped the makeup sat perfectly. No touch-ups for 6 hours. Every guest asked who did my skin."
+
+<strong>[CTA — 0:38–0:45]</strong>
+"Bridal packages from ₹18,999. WhatsApp in bio — enquire early."</div>
+      </div>
+
+      <div id="sample-color" class="sample-content">
+        <div class="sample-hook">"I was terrified of hair color after getting it destroyed at another salon. Then I found Aura."</div>
+        <div class="sample-script"><strong>[Hook — 0:00–0:03]</strong>
+"I was terrified of hair color after getting it destroyed at another salon."
+
+<strong>[Trust — 0:03–0:12]</strong>
+*shows hair*
+"Aura does a strand test before coloring. They use Schwarzkopf and Wella only. They sent me home with an aftercare kit. Nobody had done that for me before."
+
+<strong>[Proof — 0:12–0:17]</strong>
+"This is my balayage. Three months in. No brassiness, no damage. My hair is actually healthier than before I colored it."
+
+<strong>[CTA — 0:17–0:20]</strong>
+"Aura Studio, Governorpet. Link in bio."</div>
+      </div>
+    </div>
+
+    <div class="sample-right">
+      <div class="why-card">
+        <div class="why-title">Why UGC scripts convert</div>
+        <div class="why-text">Traditional ads look like ads. People scroll past them. UGC content looks like a real friend sharing an honest experience — that's why it stops the scroll and drives action.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-title">Every script follows a proven framework</div>
+        <div class="why-text">Hook → Problem → Discovery → Proof → Soft CTA. Each section is carefully written so viewers feel seen, not sold to.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-title">Written for your exact audience</div>
+        <div class="why-text">Scripts are researched and written using the real language your local customers use — not generic marketing copy. Specific details, local references, real pain points.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <p class="sec-eyebrow">How It Works</p>
+  <h2 class="sec-title">From brief to <em>ready-to-film</em> in 48 hours</h2>
+  <div class="process-grid">
+    <div class="process-step" data-num="01">
+      <div class="process-step-title">You share your brief</div>
+      <p class="process-step-text">Tell me your business, services, target audience, and what problem you solve. A 5-minute WhatsApp voice note works perfectly.</p>
+    </div>
+    <div class="process-step" data-num="02">
+      <div class="process-step-title">I research your audience</div>
+      <p class="process-step-text">I study your Instagram, your reviews, and how your local customers talk about the problem you solve. The script uses their exact language.</p>
+    </div>
+    <div class="process-step" data-num="03">
+      <div class="process-step-title">Scripts delivered in 48h</div>
+      <p class="process-step-text">You receive a full content pack — hooks, timestamped scripts, visual directions, captions, and CTAs. Ready to film immediately.</p>
+    </div>
+    <div class="process-step" data-num="04">
+      <div class="process-step-title">Free revision included</div>
+      <p class="process-step-text">If any script doesn't feel right for your brand's tone, one full revision is included at no extra cost. Your satisfaction is the only brief.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <p class="sec-eyebrow">Packages</p>
+  <h2 class="sec-title">Simple, transparent <em>pricing</em></h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amt">₹3,000</div>
+      <div class="price-period">One-time · Delivered in 48h</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>5 scroll-stopping hooks</li>
+        <li>2 full 30-sec ad scripts</li>
+        <li>Platform-matched CTAs</li>
+        <li>2 Instagram captions</li>
+        <li>1 free revision</li>
+      </ul>
+      <a href="https://wa.me/91XXXXXXXXXX" class="price-btn">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="featured-tag">Most Popular</div>
+      <div class="price-name">Growth</div>
+      <div class="price-amt">₹8,000</div>
+      <div class="price-period">Per month · 4 scripts/month</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>4 fresh scripts every month</li>
+        <li>5 hooks per script</li>
+        <li>All platform versions included</li>
+        <li>4 Instagram captions</li>
+        <li>WhatsApp support</li>
+        <li>Unlimited revisions</li>
+      </ul>
+      <a href="https://wa.me/91XXXXXXXXXX" class="price-btn">Start Monthly Plan</a>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Full Calendar</div>
+      <div class="price-amt">₹18,000</div>
+      <div class="price-period">Per month · Complete content system</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>8 scripts per month</li>
+        <li>Full posting schedule</li>
+        <li>Content strategy call</li>
+        <li>Reels + Stories + Shorts versions</li>
+        <li>WhatsApp + call support</li>
+        <li>Monthly performance review</li>
+      </ul>
+      <a href="https://wa.me/91XXXXXXXXXX" class="price-btn">Enquire</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <p class="sec-eyebrow">Client Feedback</p>
+  <h2 class="sec-title">What brands say after <em>working</em> with me</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The scripts sounded exactly like our real customers talk. Our Reels got 3x more saves and DMs after we started using them."</p>
+      <div class="testi-by">Salon owner · Vijayawada</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"I expected generic content. Instead, every hook was specific to Vijayawada audiences. It felt like the creator actually understood our city."</p>
+      <div class="testi-by">Skincare brand founder · Andhra Pradesh</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Delivered in under 48 hours, two free revisions, and the bridal script brought us 6 new enquiries in one week. Best money I spent."</p>
+      <div class="testi-by">Bridal studio owner · Vijayawada</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner" id="contact">
+  <div>
+    <h2 class="cta-banner-title">Ready to make ads that actually <em>convert?</em></h2>
+    <p class="cta-banner-sub">Let's start with a free sample pack for your business — 2 hooks and 1 full script at no cost. See the quality before you commit to anything.</p>
+  </div>
+  <div class="cta-banner-actions">
+    <a href="https://wa.me/91XXXXXXXXXX" class="btn-gold">Get Free Sample Pack</a>
+    <a href="mailto:your@email.com" class="btn-ghost">or send an email</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Content<span>Studio.</span></a>
+  <div class="footer-info">
+    Vijayawada, Andhra Pradesh<br>
+    UGC Ad Scripts · Instagram · YouTube · Meta Ads
+  </div>
+  <div class="footer-links">
+    <a href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+    <a href="mailto:your@email.com">Email</a>
+    <a href="https://github.com/yourusername">GitHub</a>
+  </div>
+</footer>
+
+<script>
+function showSample(name) {
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.sample-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('sample-' + name).classList.add('active');
+}
+</script>
+
+</body>
+</html>
